@@ -52,6 +52,7 @@
 
 		function decode() {
 			var input = document.getElementById("input").value;
+			input = input.replace(/-/g, '+').replace(/_/g, '/');
 			var output = document.getElementById("output");
 			output.value = atob(input);
 		}
