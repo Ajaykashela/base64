@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Base64 Encoder/Decoder</title>
+	<style>
+		h1 {
+			text-align: center;
+		}
+
+		form {
+			max-width: 800px;
+			margin: 0 auto;
+		}
+
+		label {
+			display: block;
+			margin-top: 10px;
+		}
+
+		textarea {
+			width: 100%;
+			min-height: 100px;
+			margin-top: 5px;
+			font-size: 14px;
+			line-height: 1.5;
+			padding: 5px;
+			border: 1px solid #ccc;
+			resize: vertical;
+		}
+
+		button {
+			margin-top: 10px;
+			padding: 5px 10px;
+			font-size: 16px;
+			background-color: #008cba;
+			color: #fff;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+
+		button:hover {
+			background-color: #006b9f;
+		}
+	</style>
+	<script>
+		function encode() {
+			var input = document.getElementById("input").value;
+			var output = document.getElementById("output");
+			output.value = btoa(input);
+		}
+
+		function decode() {
+			var input = document.getElementById("input").value;
+			var output = document.getElementById("output");
+			output.value = atob(input);
+		}
+
+		function copyInput() {
+			var input = document.getElementById("input");
+			input.select();
+			document.execCommand("copy");
+			showToast('Input copied to clipboard!',2000)
+		}
+
+		function copyOutput() {
+			var output = document.getElementById("output");
+			output.select();
+			document.execCommand("copy");
+			showToast('Output copied to clipboard!',2000)
+		}
+		function showToast(message, duration) {
+			var toast = document.createElement("div");
+			toast.innerText = message;
+			toast.style.position = "fixed";
+			toast.style.bottom = "10px";
+			toast.style.left = "50%";
+			toast.style.transform = "translateX(-50%)";
+			toast.style.padding = "10px";
+			toast.style.backgroundColor = "Green";
+			toast.style.color = "#fff";
+			toast.style.borderRadius = "4px";
+			toast.style.opacity = "0";
+			toast.style.transition = "opacity 0.3s ease-in-out";
+			document.body.appendChild(toast);
+			setTimeout(function() {
+			  toast.style.opacity = "1";
+			}, 100);
+			setTimeout(function() {
+			  toast.style.opacity = "0";
+			}, duration || 2000);
+			setTimeout(function() {
+			  document.body.removeChild(toast);
+			}, duration + 300 || 2300);
+		  }		  
+	</script>
+</head>
+<body>
+	<h1>Base64 Encoder/Decoder</h1>
+	<form>
+		<label for="input">Input string:</label>
+		<textarea id="input" name="input"></textarea>
+		
+		<label for="output">Output string:</label>
+		<textarea id="output" name="output" readonly></textarea>
+		<button type="button" onclick="encode()">Encode</button>
+		<button type="button" onclick="decode()">Decode</button>
+		<button type="button" onclick="copyInput()">Copy Input</button>
+		<button type="button" onclick="copyOutput()">Copy Output</button>
+	</form>
+</body>
+</html>
