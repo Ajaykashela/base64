@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,7 +53,12 @@
 
 		function decode() {
 			var input = document.getElementById("input").value;
+			console.log("removing illegal charaters");
+			input = decodeURIComponent(input);
 			input = input.replace(/-/g, '+').replace(/_/g, '/');
+			const regex = /[^A-Za-z0-9]/g;
+			input = input.replace(regex, '');
+			console.log("Final Input being decoded : "+input)
 			var output = document.getElementById("output");
 			output.value = atob(input);
 		}
@@ -78,7 +84,7 @@
 			toast.style.left = "50%";
 			toast.style.transform = "translateX(-50%)";
 			toast.style.padding = "10px";
-			toast.style.backgroundColor = "Green";
+			toast.style.backgroundColor = "#32CD32";
 			toast.style.color = "#fff";
 			toast.style.borderRadius = "4px";
 			toast.style.opacity = "0";
