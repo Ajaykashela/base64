@@ -63,6 +63,94 @@
 			output.value = atob(input);
 		}
 
+		function baseURLisPresent(){
+			var input = document.getElementById("input").value;
+			const regex = /https/g;
+			const isHttpsPresent = regex.test(input);
+			return isHttpsPresent;
+		}
+	
+		function RemoveDS7(){
+			//check if BaseURL is present
+			var input = document.getElementById("input").value;
+			var baseURL = '';
+			var isbaseURLPresent= baseURLisPresent();
+			console.log("is base url present ? "+isbaseURLPresent);
+			if(isbaseURLPresent){
+				const delimiter = "/one/one.app";
+				const parts = input.split(delimiter);
+				baseURL = parts[0]+delimiter+'#';
+				console.log(delimiter)
+				console.log(baseURL)
+				console.log(parts[0])
+				
+				input = parts[1] || "";	
+				console.log("input after removing baseURL : "+input)			
+			}
+			//get the values and decode input
+			console.log("removing illegal charaters");
+			input = decodeURIComponent(input);
+			input = input.replace(/-/g, '+').replace(/_/g, '/');
+			const regex = /[^A-Za-z0-9]/g;
+			input = input.replace(regex, '');
+			console.log("Final Input being decoded : "+input)
+			var decodedinput = atob(input);
+			//remove DS7
+			var DecodedInputWithRemovedDs7 = decodedinput.replace('&DS7=13','');
+			//put value in output panel after encoding back
+			var output = document.getElementById("output");
+			output.value = btoa(DecodedInputWithRemovedDs7);
+			if(isbaseURLPresent){
+				console.log("BASE : "+baseURL)
+				console.log("ENCODE "+btoa(DecodedInputWithRemovedDs7));
+				output.value = baseURL+btoa(DecodedInputWithRemovedDs7);
+			}
+			//copy output
+			copyOutput();
+
+		}
+
+		function RemoveDS7andRedirect(){
+			//check if BaseURL is present
+			var input = document.getElementById("input").value;
+			var baseURL = '';
+			var isbaseURLPresent= baseURLisPresent();
+			console.log("is base url present ? "+isbaseURLPresent);
+			if(isbaseURLPresent){
+				const delimiter = "/one/one.app";
+				const parts = input.split(delimiter);
+				baseURL = parts[0]+delimiter+'#';
+				console.log(delimiter)
+				console.log(baseURL)
+				console.log(parts[0])
+				
+				input = parts[1] || "";	
+				console.log("input after removing baseURL : "+input)			
+			}
+			//get the values and decode input
+			console.log("removing illegal charaters");
+			input = decodeURIComponent(input);
+			input = input.replace(/-/g, '+').replace(/_/g, '/');
+			const regex = /[^A-Za-z0-9]/g;
+			input = input.replace(regex, '');
+			console.log("Final Input being decoded : "+input)
+			var decodedinput = atob(input);
+			//remove DS7
+			var DecodedInputWithRemovedDs7 = decodedinput.replace('&DS7=13','');
+			//put value in output panel after encoding back
+			var output = document.getElementById("output");
+			output.value = btoa(DecodedInputWithRemovedDs7);
+			if(isbaseURLPresent){
+				console.log("BASE : "+baseURL)
+				console.log("ENCODE "+btoa(DecodedInputWithRemovedDs7));
+				output.value = baseURL+btoa(DecodedInputWithRemovedDs7);
+			}
+			//redirect
+			window.open(output.value, '_blank');
+
+		}
+
+
 		function copyInput() {
 			var input = document.getElementById("input");
 			input.select();
@@ -114,6 +202,15 @@
 		<button type="button" onclick="decode()">Decode</button>
 		<button type="button" onclick="copyInput()">Copy Input</button>
 		<button type="button" onclick="copyOutput()">Copy Output</button>
+		
+		<hr>
+		Below buttons are under build and not throughly tested.<br>
+		<ol>
+		<li>Below button will automatically identify if you have baseURL in input and remove it while decoding and add back in after encoding.</li>
+		<li>For now, below buttons can only remove <strong>&DS7=13</strong></li>
+		</ol>
+		<button type="button" onclick="RemoveDS7()">Remove DS7 and Copy Final link</button>
+		<button type="button" onclick="RemoveDS7andRedirect()">Remove DS7 and Redirect</button>
 	</form>
 </body>
 </html>
