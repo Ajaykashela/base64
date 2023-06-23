@@ -96,7 +96,7 @@
 			console.log("Final Input being decoded : "+input)
 			var decodedinput = atob(input);
 			//remove DS7
-			var DecodedInputWithRemovedDs7 = decodedinput.replace('&DS7=13','');
+			var DecodedInputWithRemovedDs7 = decodedinput.replace('&DS7=13','').replace('&DS7=11','');
 			//put value in output panel after encoding back
 			var output = document.getElementById("output");
 			output.value = btoa(DecodedInputWithRemovedDs7);
